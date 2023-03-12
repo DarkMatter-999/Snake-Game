@@ -24,14 +24,14 @@ const drawGame = () => {
 
         clearScreen();
 
-        drawSnake();
-
         //check is the player died
         if (isGameOver()) {
             displayGameOver();
             console.log("GameOver");
             restart = false;
         }
+
+        drawSnake();
 
         checkCollision();
         drawFood();
@@ -139,6 +139,13 @@ const isGameOver = () => {
         return true;
     } else if (headY < 0 || headY === tileCount) {
         return true;
+    }
+
+    for (let i = 0; i < snake.length; i++) {
+        const part = snake[i];
+        if (part.x === headX && part.y === headY) {
+            return true;
+        }
     }
 
     return false;
