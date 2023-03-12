@@ -18,11 +18,15 @@ const clearScreen = () => {
 
 // Loop
 const drawGame = () => {
-    clearScreen();
-    drawSnake();
     changeSnakePosition();
+
+    clearScreen();
+
+    drawSnake();
     checkCollision();
     drawFood();
+    drawScore();
+
     setTimeout(drawGame, 1000 / SPEED);
 };
 
@@ -33,6 +37,16 @@ let headY = 10;
 
 let xvel = 0;
 let yvel = 0;
+
+const snake = [];
+let tailLength = 2;
+
+class Snake {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
 document.body.addEventListener("keydown", keyDown);
 
@@ -62,7 +76,22 @@ function keyDown(event) {
 
 const drawSnake = () => {
     context.fillStyle = "orange";
-    context.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
+
+    for (let i = 0; i < snake.length; i++) {
+        const part = snake[i];
+        context.fillRect(
+            part.x * tileCount,
+            part.y * tileCount,
+            tileSize,
+            tileSize
+        );
+    }
+
+    // add new node and delete the last node
+    snake.push(new Snake(headX, headY));
+    if (snake.length > tailLength) {
+        snake.shift();
+    }
 };
 
 function changeSnakePosition() {
@@ -82,9 +111,15 @@ const checkCollision = () => {
     if (foodX == headX && foodY == headY) {
         foodX = Math.floor(Math.random() * tileCount);
         foodY = Math.floor(Math.random() * tileCount);
+        tailLength++;
         Score++;
-        document.getElementById("score").innerText = Score;
     }
+};
+
+const drawScore = () => {
+    context.fillStyle = "white";
+    context.font = "10px verdena";
+    context.fillText("Score: " + Score, 5, 10);
 };
 
 drawScreen();
