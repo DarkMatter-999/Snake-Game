@@ -4,6 +4,7 @@ const context = viewport.getContext("2d");
 
 const SPEED = 10;
 let Score = 0;
+let restart = false;
 
 // Setup
 const drawScreen = () => {
@@ -18,23 +19,24 @@ const clearScreen = () => {
 
 // Loop
 const drawGame = () => {
-    changeSnakePosition();
+    if (restart) {
+        changeSnakePosition();
 
-    clearScreen();
+        clearScreen();
 
-    drawSnake();
+        drawSnake();
 
-    //check is the player died
-    if (isGameOver()) {
-        displayGameOver();
-        console.log("GameOver");
-        return;
+        //check is the player died
+        if (isGameOver()) {
+            displayGameOver();
+            console.log("GameOver");
+            restart = false;
+        }
+
+        checkCollision();
+        drawFood();
+        drawScore();
     }
-
-    checkCollision();
-    drawFood();
-    drawScore();
-
     setTimeout(drawGame, 1000 / SPEED);
 };
 
@@ -152,7 +154,7 @@ const displayGameOver = () => {
     );
 };
 
-const restart = () => {
+const Restart = () => {
     headX = 10;
     headY = 10;
 
@@ -161,8 +163,11 @@ const restart = () => {
 
     tailLength = 2;
 
-    clearScreen();
-    drawGame();
+    while (snake.length) {
+        snake.pop();
+    }
+
+    restart = true;
 };
 
 drawScreen();
