@@ -23,6 +23,14 @@ const drawGame = () => {
     clearScreen();
 
     drawSnake();
+
+    //check is the player died
+    if (isGameOver()) {
+        displayGameOver();
+        console.log("GameOver");
+        return;
+    }
+
     checkCollision();
     drawFood();
     drawScore();
@@ -36,7 +44,7 @@ let headX = 10;
 let headY = 10;
 
 let xvel = 0;
-let yvel = 0;
+let yvel = -1;
 
 const snake = [];
 let tailLength = 2;
@@ -120,6 +128,41 @@ const drawScore = () => {
     context.fillStyle = "white";
     context.font = "10px verdena";
     context.fillText("Score: " + Score, 5, 10);
+};
+
+const isGameOver = () => {
+    if (xvel === 0 && yvel === 0) {
+        return true;
+    } else if (headX < 0 || headX === tileCount) {
+        return true;
+    } else if (headY < 0 || headY === tileCount) {
+        return true;
+    }
+
+    return false;
+};
+
+const displayGameOver = () => {
+    context.fillStyle = "white";
+    context.font = "50px verdana";
+    context.fillText(
+        "Game Over",
+        viewport.clientWidth / 6.5,
+        viewport.clientHeight / 2
+    );
+};
+
+const restart = () => {
+    headX = 10;
+    headY = 10;
+
+    xvel = 0;
+    yvel = -1;
+
+    tailLength = 2;
+
+    clearScreen();
+    drawGame();
 };
 
 drawScreen();
