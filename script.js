@@ -3,6 +3,7 @@ const viewport = document.getElementById("viewport");
 const context = viewport.getContext("2d");
 
 const SPEED = 10;
+let Score = 0;
 
 // Setup
 const drawScreen = () => {
@@ -81,6 +82,8 @@ const checkCollision = () => {
     if (foodX == headX && foodY == headY) {
         foodX = Math.floor(Math.random() * tileCount);
         foodY = Math.floor(Math.random() * tileCount);
+        Score++;
+        document.getElementById("score").innerText = Score;
     }
 };
 
