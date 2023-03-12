@@ -20,7 +20,8 @@ const drawGame = () => {
     clearScreen();
     drawSnake();
     changeSnakePosition();
-    console.log("here");
+    checkCollision();
+    drawFood();
     setTimeout(drawGame, 1000 / SPEED);
 };
 
@@ -67,5 +68,20 @@ function changeSnakePosition() {
     headX = headX + xvel;
     headY = headY + yvel;
 }
+
+let foodX = Math.floor(Math.random() * tileCount);
+let foodY = Math.floor(Math.random() * tileCount);
+
+const drawFood = () => {
+    context.fillStyle = "red";
+    context.fillRect(foodX * tileCount, foodY * tileCount, tileSize, tileSize);
+};
+
+const checkCollision = () => {
+    if (foodX == headX && foodY == headY) {
+        foodX = Math.floor(Math.random() * tileCount);
+        foodY = Math.floor(Math.random() * tileCount);
+    }
+};
 
 drawScreen();
