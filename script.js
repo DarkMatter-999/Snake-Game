@@ -2,7 +2,7 @@ const viewport = document.getElementById("viewport");
 
 const context = viewport.getContext("2d");
 
-const SPEED = 10;
+const SPEED = 5;
 let Score = 0;
 let restart = false;
 
@@ -175,6 +175,24 @@ const Restart = () => {
     }
 
     restart = true;
+};
+
+const moveUp = () => {
+    yvel = -1; //move one tile up
+    xvel = 0;
+};
+const moveDown = () => {
+    yvel = 1; //move one tile down
+    xvel = 0;
+};
+
+const moveLeft = () => {
+    yvel = 0;
+    xvel = -1; //move one tile left
+};
+const moveRight = () => {
+    yvel = 0;
+    xvel = 1; //move one tile right
 };
 
 drawScreen();

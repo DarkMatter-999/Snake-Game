@@ -9,7 +9,15 @@
     </head>
     <body>
         <canvas id="viewport" height="400px" width="400px"> </canvas>
-        <button onClick="Restart()">Restart</button>
+        <button class="restart" onClick="Restart()">Restart</button>
+        <div class="dpad">
+            <button onclick="moveUp()">▲</button>
+            <div class="dpadinside">
+                <button onclick="moveLeft()">◄</button>
+                <button onclick="moveRight()">►</button>
+            </div>
+            <button onclick="moveDown()">▼</button>
+        </div>
         <script src="script.js"></script>
     </body>
 </html>
